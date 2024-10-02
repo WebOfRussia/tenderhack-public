@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  tenderhack_bot:
+    restart: unless-stopped
+    # image: tenderhack_bot:latest
+    build:
+      context: tender_front
+      dockerfile: Dockerfile
+    container_name: tenderhack_bot
+    environment:
+      RASA_HOST: 'http://rasa_server'
+      RASA_PORT: 5005
+    ports:
+      - '8501:8501'
+
+  rasa_server:
+    container_name: "rasa_server"
+    restart: unless-stopped
+    user: root
+    build:
+      context: tender_bot
+      dockerfile: Dockerfile
+    volumes:
+      - "./tender_bot:/app"
+    ports:
+      - "5005:5005"
+
+  action_server:
+    container_name: "action_server"
+    restart: unless-stopped
+    build:
+      context: tender_bot
+      dockerfile: ./actions/Dockerfile
+    volumes:
+      - "./tender_bot/actions:/app/actions"
+      - "./tender_bot/data:/app/data"
+      - "./data:/data"
+      - "./contract:/contract"
+    ports:
+      - "5055:5055"

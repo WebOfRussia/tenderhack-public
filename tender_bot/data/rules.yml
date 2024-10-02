@@ -1,0 +1,51 @@
+version: "3.1"
+
+rules:
+
+# - rule: Ask for confirmation after parsing contract
+#   steps:
+#     - intent: provide_contract
+#     - action: action_parse_contract
+#    - action: utter_ask_confirmation
+
+
+# - rule: Handle reason explanation
+  # condition:
+    # - active_loop: null
+  # steps:
+    # - intent: explain_reason
+    # - action: action_handle_reason
+    # - action: utter_propose_agreement
+    # - action: action_send_agreement_metadata
+
+- rule: Handle changes
+  steps:
+  - action: utter_what_you_want_to_change
+  - intent: provide_changes
+  - action: action_handle_proposed_changes
+  - action: action_send_agreement_metadata
+
+- rule: Handle on the fly changes
+  steps:
+  - intent: changes_on_the_fly
+  - action: action_change_existing_agreement
+  - action: action_send_agreement_metadata
+
+- rule: Handle reason
+  steps:
+  - action: action_parse_contract
+  - intent: explain_reason
+    entities:
+      - reason: "<user_provided_reason>"
+  - action: action_handle_reason
+
+- rule: Greet user
+  steps:
+    - intent: greet
+    - action: utter_greet
+
+# todo say no
+- rule: Goodbye
+  steps:
+    - intent: goodbye
+    - action: utter_goodbye

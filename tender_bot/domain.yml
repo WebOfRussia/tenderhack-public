@@ -1,0 +1,79 @@
+version: "3.1"
+
+intents:
+  - provide_contract
+  - affirm
+  - provide_changes
+  - changes_on_the_fly
+  - explain_reason
+  - greet
+  - goodbye
+
+entities:
+  - contract_id
+  - reason
+
+slots:
+  contract_id:
+    type: text
+    influence_conversation: false
+    mappings:
+     - type: from_entity
+       entity: contract_id
+  proposed_changes:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+  contract_metadata:
+    type: text
+    influence_conversation: false
+    mappings:
+     - type: custom
+  reason:
+    type: text
+    influence_conversation: false
+    mappings:
+     - type: from_entity
+       entity: reason
+       
+responses:
+  utter_ask_confirmation:
+    - text: "Правильно ли мы распознали ваш договор?"
+  utter_thanks_for_confirmation:
+    - text: "Спасибо за подтверждение! Напишите ваш вопрос, что вы хотите в нём изменить?"
+  utter_propose_agreement:
+    - text: "На основе введённой информации мы предлагаем следующее доп. соглашение."
+  utter_file_generated:
+    - text: "Дополнительное соглашение было сгенерировано успешно."
+  utter_greet:
+    - text: "Добрый день, я чат-бот для помощи по составлению доп.соглашений. Чем могу быть полезен?"
+  utter_goodbye:
+    - text: "Спасибо за использование нашего сервиса!"
+  utter_do_you_want_to_proceed:
+    - text: "На основании предоставленной информации, хотите ли вы создать доп.соглашение?"
+  utter_what_you_want_to_change:
+    - text: "Опишите в деталях вносимые изменения"
+  utter_is_everything_ok:
+    - text: "Проверьте дополнительное соглашение, если вы хотите что-то поменять, то просто напишите вносимые изменения"
+
+actions:
+  - action_parse_contract
+  - action_handle_reason
+  - action_generate_additional_agreement
+  - action_send_agreement_metadata
+  - action_handle_proposed_changes
+  - action_change_existing_agreement
+  - utter_ask_confirmation
+  - utter_thanks_for_confirmation
+  - utter_propose_agreement
+  - utter_file_generated
+  - utter_greet
+  - utter_goodbye
+  - utter_do_you_want_to_proceed
+  - utter_what_you_want_to_change
+  - utter_is_everything_ok
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

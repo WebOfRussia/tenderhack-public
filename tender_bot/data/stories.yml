@@ -1,0 +1,19 @@
+version: "3.1"
+
+stories:
+- story: Handle contract for additional agreement
+  steps:
+  - intent: provide_contract
+    entities:
+      - contract_type: id
+  - action: action_parse_contract
+  # - action: utter_ask_confirmation # TODO: показывать номер договора или ещё чё то
+  - intent: explain_reason
+  - entities:
+      - reason: "<user_provided_reason>"
+  - action: action_handle_reason
+  - intent: affirm
+  - action: utter_what_you_want_to_change
+  # - intent: provide_changes # TODO: сделать чтобы всё шло по порядку
+  # - action: action_handle_proposed_changes
+  # - action: action_send_agreement_metadata
