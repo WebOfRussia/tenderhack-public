@@ -17,6 +17,7 @@
 ## Как запускать
 
 Публичное демо по ссылке: http://dopnique.web-of-russia.org/
+
 Слайды с примерами диалогов: https://disk.yandex.ru/i/KXkPO6x-CQYGLw
 
 ### LLM
